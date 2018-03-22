@@ -1,0 +1,14 @@
+;; -*- emacs-lisp -*- <18/03/22 05:51:15 /Users/bokwoon/.emacs.d/tramp>
+;; Tramp connection history.  Don't change this file.
+;; You can delete it, forcing Tramp to reapply the checks.
+
+((["ssh" nil "sunfire.comp.nus.edu.sg" nil nil]
+  nil)
+ (["ssh" "bokwoon" "sun" nil nil]
+  nil)
+ (["ssh" nil "ssh" nil nil]
+  nil)
+ (["ssh" nil "adb" nil nil]
+  nil)
+ (["ssh" "bokwoon" "sunfire.comp.nus.edu.sg" nil nil]
+  nil))
