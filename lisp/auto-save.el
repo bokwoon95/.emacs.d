@@ -85,6 +85,9 @@
 
 ;;; Code:
 
+;;; Chen Bin's custom version @ https://github.com/redguardtoo/emacs.d/blob/master/site-lisp/auto-save/auto-save.el
+;; "Check file-writable-p and buffer-modified-p and other conditions before saving"
+
 (defgroup auto-save nil
   "Auto save file when emacs idle."
   :group 'auto-save)

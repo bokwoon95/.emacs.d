@@ -1,0 +1,28 @@
+[WIP]
+
+1)  NO bimodal Tab Toggling (to be accurate: no SANE way to implement tab toggling)
+Tab: Folded -> Children -> Subtree
+S-Tab: Overview -> Contents -> Show All
+' Children' and 'Contents' view are absolutely useless and a hindrance. It forces you to put EVERYTHING in some level of *asterisk headers for folding to work properly else 'Children' and 'Contents' view will inevitably fuck up your formatting. Have you seen what org mode without prettified bullets looks like? It's plain ugly in raw view, an ugly mess of sloping asterisks the deeper the levels you go. e.g.
+
+* Here's a bullet
+_here's some text under a bullet, but underlined_
+
+Why isn't anyone bothered by this? Why has nobody in org mode's long history not been bothered that non-header text is treated as second-class citizens and did something about it? I don't know enough to do something on my own, and even if I tried I might find that it's just impossible to rewrite such a core feature. *If no one has bothered doing it, it's just another quirk about orgmode you have to live with.*
+
+Attempt: Stackoverflow solution - [[https://emacs.stackexchange.com/questions/36232/org-mode-property-to-make-subtree-visibility-bimodal]]
+Fail:
+	1. It doesn't enforce bimodality by default, you have to manually mark each header as 'bimodal'
+	2. Even then, it leaves a dangling :Properties: drawer for every header marked as 'bimodal'. Imagine seeing that for every header (and subheader)! The properties drawer contents can be hidden, but not the drawer itself. Worst still is that the drawer itself gets expanded by the new bimodal "Tab" (ironic)
+		2a. You COULD hide the :Properties: drawer entirely... (stackoverflow solution - [[https://stackoverflow.com/questions/17478260/completely-hide-the-properties-drawer-in-org-mode/17492723#17492723]])
+		2b. at the cost of never being able to access the :Properties: function if you ever need it
+Settled Compromise: go without orgmode's folding altogether (and use the bullets strictly in global SHOW ALL view). Orgmode started as a simple bullet folding program (Google talk about it here [[https://www.youtube.com/watch?v=oJTwQvgfgMM]]) How ironic that everything else is good (proportional fonts, pretty markup, working vim emulation) but the bullet folding is the downside.
+
+2) Sane latex preview? Why can't I toggle the latex preview state only for the fragment under cursor? If I want to quickly dip into a LaTeX fragment to do a quick edit, I'm forced to GLOBALLY toggle LaTeX off, edit the LaTeX code, then GLOBALLY redisplay all LaTeX fragments.
+
+If you want to edit a single fragment, it's not sane design to clear all fragments in the document just to edit that one fragment. Why aren't there more issues on stackoverflow/reddit/etc on this? I don't know enough to do something on my own, and even I tried I might find that it's just impossible to rewrite such a core feature. *If no one has bothered doing it, it's just another quirk about orgmode you have to live with.*
+
+Attempt: org-latex-toggle-preview
+Fail: Not only does it toggle LaTeX off for the fragment under cursor, it  toggles it off for every other header than the cursor is not currently in. WTF? How is this sane behavior? I want everything 
+Compromise:
+
