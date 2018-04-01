@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<a:fontScheme xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" name="Scenariio">
+  <a:majorFont>
+    <a:latin typeface="Open Sans"/>
+    <a:ea typeface=""/>
+    <a:cs typeface=""/>
+  </a:majorFont>
+  <a:minorFont>
+    <a:latin typeface="Vollkorn"/>
+    <a:ea typeface=""/>
+    <a:cs typeface=""/>
+  </a:minorFont>
+</a:fontScheme>
+<!-- /Users/bokwoon/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Themes.localized/Theme Fonts/ -->
+<!-- normal.dotm goes here: -->
+<!-- /Users/bokwoon/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Templates.localized -->
+
+<!-- EMACS SHORTCUTS IMPLEMENTED AS WORD MACROS -->
+
+<!-- Movement        Movement+Selection          New     Old -->
+<!-- ================================================================= -->
+<!-- BackwardChar    SelectBackwardChar          (C-b)   (Left) -->
+<!-- BackwardWord    SelectBackwardWord          (C-M-b) (M-Left) -->
+<!-- Down            SelectDown                  (C-n)   (Down) -->
+<!-- DownFive        SelectDownFive              (C-M-n) (Down x5) -->
+<!-- EndofLine       SelectTilEndofLine          (C-e)   (Cm-Right) -->
+<!-- ForwardChar     SelectForwardChar           (C-f)   (Right) -->
+<!-- ForwardWord     SelectForwardWord           (C-M-f) (M-Right) -->
+<!-- StartofLine     SelectTilStartofLine        (C-a)   (Cm-Left) -->
+<!-- Up              SelectUp                    (C-p)   (Up) -->
+<!-- UpFive          SelectUpFive                (C-M-p) (Up x5) -->
+<!-- StartofDocument SelectTilStartofDocument    (C-S-<) (fn-Cm-Left) -->
+<!-- EndofDocument   SelectTilEndofDocument      (C-S->) (fn-Cm-Right) -->
+
+<!-- ComplementaryDeletion -->
+<!-- ====================== -->
+<!-- DeleteForwardChar DeleteForwardWord -->
+<!-- KillTilEndofLine KillTilStartofLine -->

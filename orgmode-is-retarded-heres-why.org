@@ -5,8 +5,23 @@ Tab: Folded -> Children -> Subtree
 S-Tab: Overview -> Contents -> Show All
 ' Children' and 'Contents' view are absolutely useless and a hindrance. It forces you to put EVERYTHING in some level of *asterisk headers for folding to work properly else 'Children' and 'Contents' view will inevitably fuck up your formatting. Have you seen what org mode without prettified bullets looks like? It's plain ugly in raw view, an ugly mess of sloping asterisks the deeper the levels you go. e.g.
 
-* Here's a bullet
-_here's some text under a bullet, but underlined_
+_Title One: Some Important Thing_
+*** some items
+**** Elaboration
+*** more items
+**** some text goes here
+*** the second-last item on the list
+        - Elaboration
+        - 
+        - 
+*** the last item on the list
+**** Elaboration
+***** More elaboration
+****** Even more elaboration, to prove my point
+
+_Title Two: Some Other Important Thing_
+	And here is some normal text. Guess what this paragraph + its title gets folded into? That's right, the last header above. Which happens to be the sub-sub-sub elaboration of on of the bullet points.
+	Look, I don't always want to couch everything in org bullets. It's not natural, and it makes the whole file look disgusting in raw text form when every line is prepended by a fuckton of \*asterisks\*. But that's what org-mode enforces on y0u. Make everything a header, else suffer fucked-up folding where non-headers are treated as second-class citizens and automatically get eaten up by the last header, no matter how insignificant that header is.
 
 Why isn't anyone bothered by this? Why has nobody in org mode's long history not been bothered that non-header text is treated as second-class citizens and did something about it? I don't know enough to do something on my own, and even if I tried I might find that it's just impossible to rewrite such a core feature. *If no one has bothered doing it, it's just another quirk about orgmode you have to live with.*
 
@@ -18,7 +33,7 @@ Fail:
 		2b. at the cost of never being able to access the :Properties: function if you ever need it
 Settled Compromise: go without orgmode's folding altogether (and use the bullets strictly in global SHOW ALL view). Orgmode started as a simple bullet folding program (Google talk about it here [[https://www.youtube.com/watch?v=oJTwQvgfgMM]]) How ironic that everything else is good (proportional fonts, pretty markup, working vim emulation) but the bullet folding is the downside.
 
-2) Sane latex preview? Why can't I toggle the latex preview state only for the fragment under cursor? If I want to quickly dip into a LaTeX fragment to do a quick edit, I'm forced to GLOBALLY toggle LaTeX off, edit the LaTeX code, then GLOBALLY redisplay all LaTeX fragments.
+2) Sane latex preview? Why can't I toggle the latex preview state only for the fragment under cursor? If I want to quickly dip into a LaTeX fragment to do a quick edit, I'm forced to GLOBALLY toggle LaTeX off, edit the LaTeX code, then GLOBALLY redisplay all LaTeX fragments. This can take fucking forever if it decides to regenerate every single fragment in the buffer even if you just edited one or two fragments.
 
 If you want to edit a single fragment, it's not sane design to clear all fragments in the document just to edit that one fragment. Why aren't there more issues on stackoverflow/reddit/etc on this? I don't know enough to do something on my own, and even I tried I might find that it's just impossible to rewrite such a core feature. *If no one has bothered doing it, it's just another quirk about orgmode you have to live with.*
 

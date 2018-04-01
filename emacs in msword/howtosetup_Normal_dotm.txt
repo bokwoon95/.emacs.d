@@ -1,0 +1,64 @@
+========================================
+NORMAL.DOTM: THE VIMRC OF MICROSOFT WORD
+========================================
+Every new document will use Normal.dotm file as the base template.
+
+The Normal.dotm file is located in
+/Users/bokwoon/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Templates.localized/
+
+It is VITAL you edit Normal.dotm from within Word itself or you will not be able to open Normal.dotm at all, merely open a new Untitled Document.
+    The ‘Library’ folder is actually hidden in Microsoft Word’s file browser, but you can get around it by dragging and dropping the folder from Finder into the file browser in Microsoft Word.
+
+Preferably you can drag the Normal.dotm file from https://github.com/bokwoon95/.emacs.d/tree/master/emacs%20in%20msword into above Templates.localized folder and have everything work out of the box. If not you'll have to record the macros for each shortcut manually, which is REALLY tedious.
+
+==================
+Manual to-do list:
+==================
+
+1) Set default font as Vollkorn 9.
+    Right-click>Font...>Set the font to Vollkorn 9>Click the 'default' button in the bottom left corner to make this setting default for all documents
+
+2) Halve the tabstop length from 1.27cm to 0.63cm
+    Right-click>Paragraph...>Tabs...
+
+3) Emacs Macros
+Movement        Movement+Selection          New     Old
+-----------------------------------------------------------------
+BackwardChar    SelectBackwardChar          (C-b)   (Left)
+BackwardWord    SelectBackwardWord          (C-M-b) (M-Left)
+Down            SelectDown                  (C-n)   (Down)
+DownFive        SelectDownFive              (C-M-n) (Down x5)
+EndofLine       SelectTilEndofLine          (C-e)   (Cm-Right)
+ForwardChar     SelectForwardChar           (C-f)   (Right)
+ForwardWord     SelectForwardWord           (C-M-f) (M-Right)
+StartofLine     SelectTilStartofLine        (C-a)   (Cm-Left)
+Up              SelectUp                    (C-p)   (Up)
+UpFive          SelectUpFive                (C-M-p) (Up x5)
+StartofDocument SelectTilStartofDocument    (C-S-<) (fn-Cm-Left)
+EndofDocument   SelectTilEndofDocument      (C-S->) (fn-Cm-Right)
+
+ComplementaryDeletion
+----------------------
+DeleteForwardChar DeleteForwardWord
+KillTilEndofLine KillTilStartofLine
+
+=================================
+Creating a custom Theme Font set:
+=================================
+Create an XML file with the following:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<a:fontScheme xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" name="OpenSans&Vollkorn">
+  <a:majorFont>
+    <a:latin typeface="Open Sans"/>
+    <a:ea typeface=""/>
+    <a:cs typeface=""/>
+  </a:majorFont>
+  <a:minorFont>
+    <a:latin typeface="Vollkorn"/>
+    <a:ea typeface=""/>
+    <a:cs typeface=""/>
+  </a:minorFont>
+</a:fontScheme>
+
+And save it under:
+/Users/bokwoon/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Themes.localized/Theme Fonts/
