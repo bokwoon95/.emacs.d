@@ -41,6 +41,7 @@ ComplementaryDeletion
 ----------------------
 DeleteForwardChar DeleteForwardWord
 KillTilEndofLine KillTilStartofLine
+-caveat: 'KillTilEndOfLine' Selects til end of line and MOVES BACK BY ONE so you don't delete the newline character as well. Very annoying behaviour if the newline character keeps getting killed, results in a lot of unwanted joining of sentences.
 
 Misc
 ----

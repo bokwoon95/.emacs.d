@@ -39,5 +39,5 @@ If you want to edit a single fragment, it's not sane design to clear all fragmen
 
 Attempt: org-latex-toggle-preview
 Fail: Not only does it toggle LaTeX off for the fragment under cursor, it  toggles it off for every other header than the cursor is not currently in. WTF? How is this sane behavior? I want everything 
-Compromise:
+Compromise: Switch to Microsoft Word for notemaking; Its equation mode is way more powerful than using LaTeX fragments in org.
 
