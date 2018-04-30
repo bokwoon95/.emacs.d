@@ -75,7 +75,7 @@
 (unless (display-graphic-p)
    (menu-bar-mode -1))
 ;;GUI settings
-(add-to-list 'initial-frame-alist '(fullscreen . maximized)) ; start emacs in fullscreen
+;; (add-to-list 'initial-frame-alist '(fullscreen . maximized)) ; start emacs in fullscreen
 (set-default-font "Source Code Pro 13")
 ;; (set-face-font 'variable-pitch "Garamond 17")
 (set-face-font 'variable-pitch "Vollkorn 16")
@@ -94,6 +94,11 @@
 (setq window-divider-default-bottom-width 1)
 (setq window-divider-default-places 'bottom-only)
 
+;; temp function that supposedly resizes emacs
+(defun bjm-frame-resize-r ()
+  (interactive)
+  (set-frame-width (selected-frame) 625 nil 'pixelwise)
+  (set-frame-position (selected-frame) (- (display-pixel-width) (frame-pixel-width)) 0))
 ;; SANER DEFAULTS
 (setq save-interprogram-paste-before-kill t) ; sane pasting from external source
 (setq-default tab-always-indent 'complete) ; tab to indent, tab again to get completion (doesn't seem to work?)
