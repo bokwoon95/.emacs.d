@@ -514,16 +514,16 @@ end-of-buffer signals; pass the rest to the default handler."
    ["#454545" "#cd5542" "#6aaf50" "#baba36" "#5180b3" "#ab75c3" "#68a5e9" "#bdbdb3"])
  '(custom-safe-themes
    (quote
-    ("c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default)))
+	("c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default)))
  '(mode-line-format nil)
  '(package-selected-packages
    (quote
-    (vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
+	(vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
  '(window-divider-default-bottom-width 1)
  '(window-divider-default-places (quote bottom-only))
  '(writeroom-global-effects
    (quote
-    (writeroom-set-alpha writeroom-set-menu-bar-lines writeroom-set-tool-bar-lines writeroom-set-bottom-divider-width))))
+	(writeroom-set-alpha writeroom-set-menu-bar-lines writeroom-set-tool-bar-lines writeroom-set-bottom-divider-width))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

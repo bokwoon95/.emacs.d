@@ -207,7 +207,7 @@ Attribute KillTilEndofLine.VB_ProcData.VB_Invoke_Func = "Normal.NewMacros.KillTi
 '
 '
     Selection.EndKey Unit:=wdLine, Extend:=wdExtend
-    Selection.Delete Unit:=wdCharacter, Count:=1
+    Selection.MoveLeft Unit:=wdCharacter, Count:=1, Extend:=wdExtend
     Selection.TypeBackspace
 End Sub
 Sub KillTilStartofLine()

@@ -11,6 +11,13 @@ It is VITAL you edit Normal.dotm from within Word itself or you will not be able
 
 Preferably you can drag the Normal.dotm file from https://github.com/bokwoon95/.emacs.d/tree/master/emacs%20in%20msword into above Templates.localized folder and have everything work out of the box. If not you'll have to record the macros for each shortcut manually, which is REALLY tedious.
 
+Seems like dragging the Normal.dotm imports nothing, so you'll have to manually import the NewMacros.bas visual basic macro script into Normal.dotm itself.
+    Tools>Macros>Visual Basic Editor
+        Right Click Normal>Import File>Select NewMacros.bas in ~/.emacs.d/emacs-msword/
+Then, to assign a keyboard shortcut to each macro:
+    Tools>Customize Keyboard>Macros
+        Select each macro and input the corresponding keyboard shortcut
+
 ==================
 Manual to-do list:
 ==================
