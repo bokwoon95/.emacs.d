@@ -467,22 +467,6 @@ end-of-buffer signals; pass the rest to the default handler."
   (interactive)
   (ivy--cd "~/Downloads/"))
 (define-key ivy-minibuffer-map (kbd "M-d M-w") 'ivy--cd-downloads)
-(defun ivy--cd-org-ee2024 ()
-  (interactive)
-  (ivy--cd "~/OrgFiles/OrgNotes2024/"))
-(define-key ivy-minibuffer-map (kbd "M-e M-4") 'ivy--cd-org-ee2024)
-(defun ivy--cd-org-ee2027 ()
-  (interactive)
-  (ivy--cd "~/OrgFiles/OrgNotes2027/"))
-(define-key ivy-minibuffer-map (kbd "M-e M-7") 'ivy--cd-org-ee2027)
-(defun ivy--cd-org-pc1432 ()
-  (interactive)
-  (ivy--cd "~/OrgFiles/OrgNotes1432/"))
-(define-key ivy-minibuffer-map (kbd "M-1 M-4") 'ivy--cd-org-pc1432)
-(defun ivy--cd-org-st2334 ()
-  (interactive)
-  (ivy--cd "~/OrgFiles/OrgNotes2334/"))
-(define-key ivy-minibuffer-map (kbd "M-s M-t") 'ivy--cd-org-st2334)
 ;; C-RET also runs RET
 ;; (define-key ivy-minibuffer-map (kbd "C-return") 'ivy-done)
 ;; (define-key ivy-minibuffer-map (kbd "C-return") 'ivy-done)
@@ -518,7 +502,7 @@ end-of-buffer signals; pass the rest to the default handler."
  '(mode-line-format nil)
  '(package-selected-packages
    (quote
-	(vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
+	(geiser vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
  '(window-divider-default-bottom-width 1)
  '(window-divider-default-places (quote bottom-only))
  '(writeroom-global-effects
