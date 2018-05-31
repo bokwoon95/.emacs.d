@@ -77,11 +77,8 @@
 ;;GUI settings
 ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized)) ; start emacs in fullscreen
 (set-default-font "Source Code Pro 13")
-;; (set-face-font 'variable-pitch "Garamond 17")
 (set-face-font 'variable-pitch "Vollkorn 16")
-;; (set-face-font 'variable-pitch "Crimson Text SemiBold 17")
-;; (set-face-font 'variable-pitch "Cardo 17")
-(setq-default line-spacing 1)
+(setq-default line-spacing 0)
 (global-visual-line-mode t) ;;wrap text
 (setq scroll-conservatively 101)
 ;; Set colorscheme depending on whether GUI or TUI (doesn't seem to work for emacs -nw)
@@ -305,7 +302,7 @@ end-of-buffer signals; pass the rest to the default handler."
 (define-key evil-motion-state-map (kbd "H") 'evil-first-non-blank-of-visual-line)
 (define-key evil-motion-state-map (kbd "L") 'evil-end-of-visual-line)
 (define-key evil-motion-state-map (kbd "TAB") 'evil-jump-item)
-(define-key evil-normal-state-map (kbd "M-d M-d") (kbd "\"_dd"))
+(define-key evil-normal-state-map (kbd "M-d d") (kbd "\"_dd"))
 (define-key evil-visual-state-map (kbd "M-d") (kbd "\"_d"))
 ;; Jumplist
 ;; (define-key evil-motion-state-map (kbd "C-u") 'evil-jump-forward)
@@ -331,6 +328,8 @@ end-of-buffer signals; pass the rest to the default handler."
 ;; C-y Yank
 (define-key evil-insert-state-map (kbd "C-y") 'yank)
 (define-key evil-insert-state-map (kbd "C-k") (delete-region (point) (line-end-position)))
+;; Select lasted pasted text
+(define-key evil-normal-state-map (kbd "g h") (kbd "'[ V ']"))
 ;; Misc
 (defun evil-unimpaired/insert-space-above (count)
   (interactive "p")
@@ -502,7 +501,7 @@ end-of-buffer signals; pass the rest to the default handler."
  '(mode-line-format nil)
  '(package-selected-packages
    (quote
-	(geiser vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
+	(highlight-indent-guides geiser vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
  '(window-divider-default-bottom-width 1)
  '(window-divider-default-places (quote bottom-only))
  '(writeroom-global-effects
