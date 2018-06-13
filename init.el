@@ -14,6 +14,17 @@
 (emacs-init-time) ; C-M-x
 ;; C-u 0 M-x byte-recompile-directory to force recompile everything
 
+;; Quick access to init.el
+(defun find-user-init-file ()
+  "Edit the `user-init-file', in another window."
+  (interactive)
+  (find-file user-init-file))
+(global-set-key (kbd "C-c l") 'find-user-init-file)
+;; Quick reload init.el
+(defun reload-init-file ()
+  (interactive)
+  (load-file "~/.emacs.d/init.el"))
+
 ;; Add LaTeX binary to PATH
 ;; Needed for orgmode inline LaTeX previews
 (setenv "PATH" (concat "/Library/TeX/texbin" (getenv "PATH")))
@@ -21,6 +32,12 @@
 ;; Add Homebrew binaries to PATH
 (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
 (setq exec-path (append '("/usr/local/bin:") exec-path))
+;; SLIME+SBCL+QUICKLISP
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(if (file-exists-p "~/quicklisp/slime-helper.el")
+	(load (expand-file-name "~/quicklisp/slime-helper.el")))
+(define-key lisp-interaction-mode-map (kbd "C-c C-e") 'slime-eval-buffer)
+(define-key lisp-mode-map (kbd "C-c e") 'slime-eval-buffer)
 
 ;; fetch the list of packages available
 (or (file-exists-p package-user-dir)
@@ -35,6 +52,7 @@
                      writeroom-mode
                      feebleline
                      ample-theme
+                     slime
                      vdiff))
 
 ; evil - counsel (Ivy+Swiper) : MUST HAVE PACKAGES
@@ -56,20 +74,9 @@
 (global-set-key (kbd "C-H-p") (kbd "C-u 5 C-p"))
 (global-set-key (kbd "H-h") 'ns-do-hide-emacs)
 
-;; Quick access to init.el
-(defun find-user-init-file ()
-  "Edit the `user-init-file', in another window."
-  (interactive)
-  (find-file user-init-file))
-(global-set-key (kbd "C-c l") 'find-user-init-file)
-;; Quick reload init.el
-(defun reload-init-file ()
-  (interactive)
-  (load-file "~/.emacs.d/init.el"))
-
 ;;Strip away silly GUI defaults
 (setq inhibit-startup-screen t)
-(fringe-mode '(0 . 0)) ;; remove fringes at the side
+(if (display-graphic-p) (fringe-mode '(0 . 0))) ;; remove fringes if not terminal
 (tool-bar-mode -1) ; this is the real trash
 ;; (toggle-scroll-bar -1)
 (unless (display-graphic-p)
@@ -92,10 +99,11 @@
 (setq window-divider-default-places 'bottom-only)
 
 ;; temp function that supposedly resizes emacs
-(defun bjm-frame-resize-r ()
-  (interactive)
-  (set-frame-width (selected-frame) 625 nil 'pixelwise)
-  (set-frame-position (selected-frame) (- (display-pixel-width) (frame-pixel-width)) 0))
+;; (defun bjm-frame-resize-r ()
+;;   (interactive)
+;;   (set-frame-width (selected-frame) 625 nil 'pixelwise)
+;;   (set-frame-position (selected-frame) (- (display-pixel-width) (frame-pixel-width)) 0))
+
 ;; SANER DEFAULTS
 (setq save-interprogram-paste-before-kill t) ; sane pasting from external source
 (setq-default tab-always-indent 'complete) ; tab to indent, tab again to get completion (doesn't seem to work?)
@@ -139,6 +147,24 @@
   (defun track-mouse (e))
   (setq mouse-sel-mode t)
   )
+;; better comment-dwim function
+;; toggles comment on line, unless acting on visual selection
+(defun xah-comment-dwim ()
+  "http://ergoemacs.org/emacs/emacs_toggle_comment_by_line.html"
+  (interactive)
+  (if (region-active-p)
+      (comment-dwim nil)
+    (let (($lbp (line-beginning-position))
+          ($lep (line-end-position)))
+      (if (eq $lbp $lep)
+          (progn
+            (comment-dwim nil))
+        (if (eq (point) $lep)
+            (progn
+              (comment-dwim nil))
+          (progn
+            (comment-or-uncomment-region $lbp $lep)))))))
+(global-set-key (kbd "M-;") 'xah-comment-dwim)
 ;; suppress beginning/end of buffer messages (does this make emacs laggy?)
 (defun my-command-error-function (data context caller)
   "Ignore the buffer-read-only, beginning-of-buffer,
@@ -293,10 +319,12 @@ end-of-buffer signals; pass the rest to the default handler."
 (require 'evil)
 (evil-mode 1)
 ;; QoL
-(define-key evil-motion-state-map (kbd "C-a") 'View-scroll-half-page-backward)
+(define-key evil-motion-state-map (kbd "C-u") 'View-scroll-half-page-backward)
 (define-key evil-motion-state-map (kbd "C-d") 'View-scroll-half-page-forward)
 (define-key evil-motion-state-map (kbd "C-j") (kbd "5 gj"))
 (define-key evil-motion-state-map (kbd "C-k") (kbd "5 gk"))
+(define-key evil-motion-state-map (kbd "C-h") (kbd "4 C-y"))
+(define-key evil-motion-state-map (kbd "C-l") (kbd "4 C-e"))
 (define-key evil-motion-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-motion-state-map (kbd "k") 'evil-previous-visual-line)
 (define-key evil-motion-state-map (kbd "H") 'evil-first-non-blank-of-visual-line)
@@ -305,9 +333,11 @@ end-of-buffer signals; pass the rest to the default handler."
 (define-key evil-normal-state-map (kbd "M-d d") (kbd "\"_dd"))
 (define-key evil-visual-state-map (kbd "M-d") (kbd "\"_d"))
 ;; Jumplist
-;; (define-key evil-motion-state-map (kbd "C-u") 'evil-jump-forward)
+(define-key evil-motion-state-map (kbd "C-m") 'evil-jump-forward)
 ;; Buffer Management
 (define-key evil-normal-state-map [?\d] 'evil-switch-to-windows-last-buffer) ;del(backspace) to C-6
+(define-key evil-normal-state-map [C-backspace] 'evil-switch-to-windows-last-buffer)
+(define-key evil-insert-state-map [C-backspace] 'evil-switch-to-windows-last-buffer)
 ;; Window Management
 (define-key evil-motion-state-map (kbd "C-w C-q") 'evil-window-delete)
 (define-key evil-motion-state-map (kbd "C-w C-h") 'evil-window-left)
@@ -325,9 +355,11 @@ end-of-buffer signals; pass the rest to the default handler."
 (define-key evil-insert-state-map (kbd "M-b") 'backward-word)
 (define-key evil-insert-state-map (kbd "M-d") 'kill-word)
 (define-key evil-insert-state-map (kbd "C-d") 'delete-char)
-;; C-y Yank
+;; Yank
 (define-key evil-insert-state-map (kbd "C-y") 'yank)
 (define-key evil-insert-state-map (kbd "C-k") (delete-region (point) (line-end-position)))
+(define-key evil-normal-state-map (kbd "Y") (kbd "\" + y"))
+(define-key evil-visual-state-map (kbd "Y") (kbd "\" + y"))
 ;; Select lasted pasted text
 (define-key evil-normal-state-map (kbd "g h") (kbd "'[ V ']"))
 ;; Misc
@@ -402,7 +434,10 @@ end-of-buffer signals; pass the rest to the default handler."
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers nil) ; set true if you want to see recent files and bookmarks
 (setq ivy-count-format "(%d/%d) ")
-(setq ivy-ignore-buffers '("\\` " "\\`\\*"))
+(add-to-list 'ivy-ignore-buffers "\\*Messages\\*")
+(add-to-list 'ivy-ignore-buffers "\\*scratch\\*")
+(add-to-list 'ivy-ignore-buffers "\\*slime-events\\*")
+(add-to-list 'ivy-ignore-buffers "\\*inferior-lisp\\*")
 (setq enable-recursive-minibuffers t)
 ;; abo-abo's custom swiper config
 ;; (global-set-key (kbd "C-s") 'ora-swiper)
@@ -495,18 +530,19 @@ end-of-buffer signals; pass the rest to the default handler."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#454545" "#cd5542" "#6aaf50" "#baba36" "#5180b3" "#ab75c3" "#68a5e9" "#bdbdb3"])
+ '(auto-image-file-mode t)
  '(custom-safe-themes
    (quote
-	("c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default)))
+    ("c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default)))
  '(mode-line-format nil)
  '(package-selected-packages
    (quote
-	(highlight-indent-guides geiser vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
+    (slime highlight-indent-guides geiser vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
  '(window-divider-default-bottom-width 1)
  '(window-divider-default-places (quote bottom-only))
  '(writeroom-global-effects
    (quote
-	(writeroom-set-alpha writeroom-set-menu-bar-lines writeroom-set-tool-bar-lines writeroom-set-bottom-divider-width))))
+    (writeroom-set-alpha writeroom-set-menu-bar-lines writeroom-set-tool-bar-lines writeroom-set-bottom-divider-width))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
