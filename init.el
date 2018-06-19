@@ -37,6 +37,7 @@
 (if (file-exists-p "~/quicklisp/slime-helper.el")
 	(load (expand-file-name "~/quicklisp/slime-helper.el")))
 (define-key lisp-interaction-mode-map (kbd "C-c C-e") 'slime-eval-buffer)
+(define-key lisp-interaction-mode-map (kbd "C-;") (kbd "ma jVG M-; `a"))
 (define-key lisp-mode-map (kbd "C-c e") 'slime-eval-buffer)
 
 ;; fetch the list of packages available
@@ -50,7 +51,7 @@
 (setq package-list '(evil
                      counsel
                      writeroom-mode
-                     feebleline
+                     ;feebleline
                      ample-theme
                      slime
                      vdiff))
@@ -81,6 +82,8 @@
 ;; (toggle-scroll-bar -1)
 (unless (display-graphic-p)
    (menu-bar-mode -1))
+;; (if (display-graphic-p)
+;; 	(setq-default mode-line-format nil))
 ;;GUI settings
 ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized)) ; start emacs in fullscreen
 (set-default-font "Source Code Pro 13")
@@ -92,8 +95,8 @@
 (if (display-graphic-p)
     (load-theme 'whiteboard t)
   (load-theme 'wheatgrass t))
-;; Strip the modeline away?
-;; (setq-default mode-line-format nil)
+(if (display-graphic-p)
+	(custom-set-variables '(mode-line-format nil)))
 (window-divider-mode 1)
 (setq window-divider-default-bottom-width 1)
 (setq window-divider-default-places 'bottom-only)
@@ -510,7 +513,8 @@ end-of-buffer signals; pass the rest to the default handler."
 (setq tramp-default-method "ssh")
 
 ;; feebleline
-(setq feebleline-use-legacy-settings t)
+;; (if (display-graphic-p) 'feebleline-mode)
+;; (setq feebleline-use-legacy-settings t)
 ;; (window-divider-mode t)
 ;; (setq window-divider-default-bottom-width 1)
 ;; (setq window-divider-default-places (quote bottom-only))
@@ -533,16 +537,15 @@ end-of-buffer signals; pass the rest to the default handler."
  '(auto-image-file-mode t)
  '(custom-safe-themes
    (quote
-    ("c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default)))
- '(mode-line-format nil)
+	("c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default)))
  '(package-selected-packages
    (quote
-    (slime highlight-indent-guides geiser vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
+	(slime highlight-indent-guides geiser vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
  '(window-divider-default-bottom-width 1)
  '(window-divider-default-places (quote bottom-only))
  '(writeroom-global-effects
    (quote
-    (writeroom-set-alpha writeroom-set-menu-bar-lines writeroom-set-tool-bar-lines writeroom-set-bottom-divider-width))))
+	(writeroom-set-alpha writeroom-set-menu-bar-lines writeroom-set-tool-bar-lines writeroom-set-bottom-divider-width))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
