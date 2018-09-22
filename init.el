@@ -74,10 +74,14 @@
 (global-set-key (kbd "C-H-n") (kbd "C-u 5 C-n"))
 (global-set-key (kbd "C-H-p") (kbd "C-u 5 C-p"))
 (global-set-key (kbd "H-h") 'ns-do-hide-emacs)
+(global-set-key (kbd "C-s-n") (kbd "C-u 5 C-n"))
+(global-set-key (kbd "C-s-p") (kbd "C-u 5 C-p"))
 
 ;;Strip away silly GUI defaults
 (setq inhibit-startup-screen t)
 (if (display-graphic-p) (fringe-mode '(0 . 0))) ;; remove fringes if not terminal
+(if (eq system-type 'gnu/linux)
+	(menu-bar-mode -1))
 (tool-bar-mode -1) ; this is the real trash
 ;; (toggle-scroll-bar -1)
 (unless (display-graphic-p)
@@ -86,13 +90,15 @@
 ;; 	(setq-default mode-line-format nil))
 ;;GUI settings
 ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized)) ; start emacs in fullscreen
-(set-default-font "Source Code Pro 13")
+(if (eq system-type 'darwin)
+	(set-default-font "Source Code Pro 13")
+  (set-default-font "Source Code Pro 10"))
 (set-face-font 'variable-pitch "Vollkorn 16")
 (setq-default line-spacing 0)
 (global-visual-line-mode t) ;;wrap text
 (setq scroll-conservatively 101)
 ;; Set colorscheme depending on whether GUI or TUI (doesn't seem to work for emacs -nw)
-(if (display-graphic-p)
+(if (and (display-graphic-p) (eq system-type 'darwin))
     (load-theme 'whiteboard t)
   (load-theme 'wheatgrass t))
 (if (display-graphic-p)
@@ -388,7 +394,8 @@ end-of-buffer signals; pass the rest to the default handler."
 (use-package ace-window
   :ensure t
   :config
-  (global-set-key (kbd "H-w") 'ace-window))
+  (global-set-key (kbd "H-w") 'ace-window)
+  (global-set-key (kbd "s-w") 'ace-window))
 ;; Avy is installed as an ace-window dependency
 (global-set-key (kbd "H-d") 'avy-goto-char-2)
 (define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-2-below)
@@ -538,6 +545,7 @@ end-of-buffer signals; pass the rest to the default handler."
  '(custom-safe-themes
    (quote
 	("c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default)))
+ ;; '(mode-line-format nil)
  '(package-selected-packages
    (quote
 	(slime highlight-indent-guides geiser vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
