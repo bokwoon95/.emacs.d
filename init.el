@@ -25,6 +25,13 @@
   (interactive)
   (load-file "~/.emacs.d/init.el"))
 
+;; Ocaml
+(push "<SHARE_DIR>/emacs/site-lisp" load-path) ; directory containing merlin.el
+;; (setq merlin-command "<BIN_DIR>/ocamlmerlin")  ; needed only if ocamlmerlin not already in your PATH
+(autoload 'merlin-mode "merlin" "Merlin mode" t)
+(add-hook 'tuareg-mode-hook 'merlin-mode)
+(add-hook 'caml-mode-hook 'merlin-mode)
+
 ;; Add LaTeX binary to PATH
 ;; Needed for orgmode inline LaTeX previews
 (setenv "PATH" (concat "/Library/TeX/texbin" (getenv "PATH")))
@@ -100,7 +107,7 @@
 ;; Set colorscheme depending on whether GUI or TUI (doesn't seem to work for emacs -nw)
 (if (and (display-graphic-p) (eq system-type 'darwin))
     (load-theme 'whiteboard t)
-  (load-theme 'wheatgrass t))
+  (load-theme 'wombat t))
 (if (display-graphic-p)
 	(custom-set-variables '(mode-line-format nil)))
 (window-divider-mode 1)
@@ -135,7 +142,8 @@
   (interactive)
   (delete-region (point) (line-beginning-position))
   (indent-according-to-mode))
-(global-set-key (kbd "C-H-u") 'C0Ck-with-indent)
+(global-set-key (kbd "C-c C-u") 'C0Ck-with-indent)
+(global-set-key (kbd "C-c u") (kbd "C-u 0 C-k"))
 ; Flip "C-x k" & "C-x C-k"
 (global-set-key (kbd "C-x C-k") 'kill-buffer)
 ; (global-set-key (kbd "C-x k RET") 'kmacro-edit-macro) ; DO NOT turn this on it will cause your emacs to crash on init
@@ -394,6 +402,7 @@ end-of-buffer signals; pass the rest to the default handler."
 (use-package ace-window
   :ensure t
   :config
+  (global-set-key (kbd "M-o") 'ace-window)
   (global-set-key (kbd "H-w") 'ace-window)
   (global-set-key (kbd "s-w") 'ace-window))
 ;; Avy is installed as an ace-window dependency
@@ -545,7 +554,6 @@ end-of-buffer signals; pass the rest to the default handler."
  '(custom-safe-themes
    (quote
 	("c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default)))
- ;; '(mode-line-format nil)
  '(package-selected-packages
    (quote
 	(slime highlight-indent-guides geiser vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
@@ -566,3 +574,6 @@ end-of-buffer signals; pass the rest to the default handler."
  '(org-level-4 ((t (:foreground "black" :height 0.97))))
  '(org-level-5 ((t (:foreground "dim gray" :height 0.95))))
  '(org-level-6 ((t (:foreground "dark gray" :height 0.95)))))
+;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
+(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
+;; ## end of OPAM user-setup addition for emacs / base ## keep this line
