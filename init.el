@@ -27,7 +27,6 @@
 
 ;; Ocaml
 (push "<SHARE_DIR>/emacs/site-lisp" load-path) ; directory containing merlin.el
-;; (setq merlin-command "<BIN_DIR>/ocamlmerlin")  ; needed only if ocamlmerlin not already in your PATH
 (autoload 'merlin-mode "merlin" "Merlin mode" t)
 (add-hook 'tuareg-mode-hook 'merlin-mode)
 (add-hook 'caml-mode-hook 'merlin-mode)
@@ -96,7 +95,8 @@
 ;; (if (display-graphic-p)
 ;; 	(setq-default mode-line-format nil))
 ;;GUI settings
-;; (add-to-list 'initial-frame-alist '(fullscreen . maximized)) ; start emacs in fullscreen
+(if (eq system-type 'gnu/linux)
+	(add-to-list 'initial-frame-alist '(fullscreen . maximized))) ; start emacs in fullscreen
 (if (eq system-type 'darwin)
 	(set-default-font "Source Code Pro 13")
   (set-default-font "Source Code Pro 10"))
@@ -124,7 +124,7 @@
 (setq save-interprogram-paste-before-kill t) ; sane pasting from external source
 (setq-default tab-always-indent 'complete) ; tab to indent, tab again to get completion (doesn't seem to work?)
 (setq ring-bell-function 'ignore) ; mute annoying bell
-(global-prettify-symbols-mode +1)
+;; (global-prettify-symbols-mode +1)
 ;; Faster paren matching
 (show-paren-mode 1)
 (setq show-paren-delay 0)
@@ -349,6 +349,7 @@ end-of-buffer signals; pass the rest to the default handler."
 (define-key evil-motion-state-map (kbd "TAB") 'evil-jump-item)
 (define-key evil-normal-state-map (kbd "M-d d") (kbd "\"_dd"))
 (define-key evil-visual-state-map (kbd "M-d") (kbd "\"_d"))
+(define-key evil-normal-state-map (kbd "SPC ri") (kbd "gg=G C-o"))
 ;; Jumplist
 (define-key evil-motion-state-map (kbd "C-m") 'evil-jump-forward)
 ;; Buffer Management
@@ -397,7 +398,7 @@ end-of-buffer signals; pass the rest to the default handler."
 ;; M-x list-colors-display
 (setq evil-emacs-state-cursor '("red" (bar . 2))) ;set evil-emacs-mode cursor to a red bar
 (setq evil-normal-state-cursor '("forest green")) ; box
-(setq evil-insert-state-cursor '("black" (bar . 2))) ; bar
+(setq evil-insert-state-cursor '("royal blue" (bar . 2))) ; bar
 
 (use-package ace-window
   :ensure t
@@ -409,6 +410,18 @@ end-of-buffer signals; pass the rest to the default handler."
 (global-set-key (kbd "H-d") 'avy-goto-char-2)
 (define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-2-below)
 (define-key evil-normal-state-map (kbd "S") 'evil-avy-goto-char-2-above)
+
+;; Switch to previous window
+(defun switch-to-last-window ()
+  (interactive)
+  (let ((win (get-mru-window t t t)))
+    (unless win (error "Last window not found."))
+    (let ((frame (window-frame win)))
+      (raise-frame frame)
+      (select-frame frame)
+      (select-window win))))
+(global-set-key (kbd "C-x C-o") 'switch-to-last-window)
+(global-set-key (kbd "C-x o") 'switch-to-last-window)
 
 ;; (use-package key-chord
 ;;   :config
