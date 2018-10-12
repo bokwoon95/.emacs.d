@@ -30,6 +30,16 @@
 (autoload 'merlin-mode "merlin" "Merlin mode" t)
 (add-hook 'tuareg-mode-hook 'merlin-mode)
 (add-hook 'caml-mode-hook 'merlin-mode)
+;; Add the opam lisp dir to the emacs load path
+(add-to-list
+ 'load-path
+ (replace-regexp-in-string
+  "\n" "/share/emacs/site-lisp"
+  (shell-command-to-string "opam config var prefix")))
+;; Automatically load utop.el
+(autoload 'utop "utop" "Toplevel for OCaml" t)
+;; Use the opam installed utop
+(setq utop-command "opam config exec -- utop -emacs")
 
 ;; Add LaTeX binary to PATH
 ;; Needed for orgmode inline LaTeX previews
@@ -491,6 +501,7 @@ end-of-buffer signals; pass the rest to the default handler."
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "C-x f") 'counsel-find-file)
 (global-set-key (kbd "M-e") 'counsel-find-file)
 (global-set-key (kbd "<f2> f") 'counsel-describe-function)
 (global-set-key (kbd "<f2> v") 'counsel-describe-variable)
@@ -569,7 +580,7 @@ end-of-buffer signals; pass the rest to the default handler."
 	("c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" default)))
  '(package-selected-packages
    (quote
-	(slime highlight-indent-guides geiser vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
+	(utop ocp-indent slime highlight-indent-guides geiser vdiff-magit writeroom-mode use-package smex org-bullets mixed-pitch magit evil counsel ample-theme adaptive-wrap ace-window)))
  '(window-divider-default-bottom-width 1)
  '(window-divider-default-places (quote bottom-only))
  '(writeroom-global-effects
