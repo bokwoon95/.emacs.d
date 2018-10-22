@@ -40,6 +40,10 @@
 (autoload 'utop "utop" "Toplevel for OCaml" t)
 ;; Use the opam installed utop
 (setq utop-command "opam config exec -- utop -emacs")
+;; WSL Clipboard
+(defun wsl-copy (start end)
+  (interactive "r")
+  (shell-command-on-region start end "clip.exe"))
 
 ;; Add LaTeX binary to PATH
 ;; Needed for orgmode inline LaTeX previews
