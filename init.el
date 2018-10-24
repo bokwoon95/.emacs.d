@@ -96,6 +96,10 @@
 (global-set-key (kbd "H-h") 'ns-do-hide-emacs)
 (global-set-key (kbd "C-s-n") (kbd "C-u 5 C-n"))
 (global-set-key (kbd "C-s-p") (kbd "C-u 5 C-p"))
+(global-set-key (kbd "M-H-k") 'toggle-frame-maximized) ;M-F10
+(global-set-key (kbd "H-q") 'save-buffers-kill-terminal)
+;; (if (eq system-type 'darwin)
+;; 	(add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
 ;;Strip away silly GUI defaults
 (setq inhibit-startup-screen t)
