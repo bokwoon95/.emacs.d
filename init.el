@@ -24,6 +24,7 @@
 (defun reload-init-file ()
   (interactive)
   (load-file "~/.emacs.d/init.el"))
+(save-place-mode 1)
 
 ;; Ocaml
 (push "<SHARE_DIR>/emacs/site-lisp" load-path) ; directory containing merlin.el
@@ -40,6 +41,8 @@
 (autoload 'utop "utop" "Toplevel for OCaml" t)
 ;; Use the opam installed utop
 (setq utop-command "opam config exec -- utop -emacs")
+(autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
+(add-hook 'tuareg-mode-hook 'utop-minor-mode)
 ;; WSL Clipboard
 (defun wsl-copy (start end)
   (interactive "r")
@@ -73,6 +76,7 @@
                      writeroom-mode
                      ;feebleline
                      slime
+                     highlight-indent-guides
                      vdiff))
 
 ; evil - counsel (Ivy+Swiper) : MUST HAVE PACKAGES
@@ -115,7 +119,7 @@
 (if (eq system-type 'gnu/linux)
 	(add-to-list 'initial-frame-alist '(fullscreen . maximized))) ; start emacs in fullscreen
 (if (eq system-type 'darwin)
-	(set-default-font "Source Code Pro 13")
+	(set-default-font "Source Code Pro 12")
   (set-default-font "Source Code Pro 10"))
 (set-face-font 'variable-pitch "Vollkorn 16")
 (setq-default line-spacing 0)
@@ -126,6 +130,7 @@
 ;; (require 'fischmeister-theme)
 (if (and (display-graphic-p) (eq system-type 'darwin))
 	(require 'xemacs-theme)
+	;; (load-theme 'deeper-blue)
   (load-theme 'wombat t))
 ;; (if (display-graphic-p)
 ;; 	(custom-set-variables '(mode-line-format nil)))
@@ -377,8 +382,9 @@ end-of-buffer signals; pass the rest to the default handler."
 (define-key evil-motion-state-map (kbd "C-m") 'evil-jump-forward)
 ;; Buffer Management
 (define-key evil-normal-state-map [?\d] 'evil-switch-to-windows-last-buffer) ;del(backspace) to C-6
+(define-key evil-normal-state-map [backspace] 'evil-switch-to-windows-last-buffer) ;del(backspace) to C-6
 (define-key evil-normal-state-map [C-backspace] 'evil-switch-to-windows-last-buffer)
-(define-key evil-insert-state-map [C-backspace] 'evil-switch-to-windows-last-buffer)
+;; (define-key evil-insert-state-map [C-backspace] 'evil-switch-to-windows-last-buffer)
 ;; Window Management
 (define-key evil-motion-state-map (kbd "C-w C-q") 'evil-window-delete)
 (define-key evil-motion-state-map (kbd "C-w C-h") 'evil-window-left)
@@ -485,6 +491,15 @@ end-of-buffer signals; pass the rest to the default handler."
 (require 'vdiff)
 (define-key vdiff-mode-map (kbd "C-c") vdiff-mode-prefix-map)
 
+(use-package merlin
+  :ensure t)
+
+(use-package tuareg
+  :ensure t)
+
+(setq highlight-indent-guides-method 'character)
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+
 ;; Ivy mode (A superior Ido)
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers nil) ; set true if you want to see recent files and bookmarks
@@ -496,21 +511,21 @@ end-of-buffer signals; pass the rest to the default handler."
 (setq enable-recursive-minibuffers t)
 ;; abo-abo's custom swiper config
 ;; (global-set-key (kbd "C-s") 'ora-swiper)
-(global-set-key "\C-s" 'ora-swiper)
-(defun ora-swiper ()
-  (interactive)
-  (if (and (buffer-file-name)
-           (not (ignore-errors
-                  (file-remote-p (buffer-file-name))))
-           (if (eq major-mode 'org-mode)
-               (> (buffer-size) 60000)
-             (> (buffer-size) 300000)))
-      (progn
-        (save-buffer)
-        (counsel-grep))
-    (swiper--ivy (swiper--candidates))))
+;; (global-set-key "\C-s" 'ora-swiper)
+;; (defun ora-swiper ()
+;;   (interactive)
+;;   (if (and (buffer-file-name)
+;;            (not (ignore-errors
+;;                   (file-remote-p (buffer-file-name))))
+;;            (if (eq major-mode 'org-mode)
+;;                (> (buffer-size) 60000)
+;;              (> (buffer-size) 300000)))
+;;       (progn
+;;         (save-buffer)
+;;         (counsel-grep))
+;;     (swiper--ivy (swiper--candidates))))
 ;; Ivy-based interface to standard commands
-;; (global-set-key (kbd "C-s") 'swiper)
+(global-set-key (kbd "C-s") 'swiper)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
@@ -593,6 +608,11 @@ end-of-buffer signals; pass the rest to the default handler."
  '(org-level-4 ((t (:foreground "black" :height 0.97))))
  '(org-level-5 ((t (:foreground "dim gray" :height 0.95))))
  '(org-level-6 ((t (:foreground "dark gray" :height 0.95)))))
-;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
-(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
-;; ## end of OPAM user-setup addition for emacs / base ## keep this line
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+	(dash-at-point highlight-indent-guides tuareg merlin writeroom-mode vdiff use-package smex slime org-bullets mixed-pitch magit evil counsel adaptive-wrap ace-window))))
