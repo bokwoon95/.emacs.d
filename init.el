@@ -166,8 +166,8 @@
   (interactive)
   (delete-region (point) (line-beginning-position))
   (indent-according-to-mode))
-(global-set-key (kbd "C-c C-u") 'C0Ck-with-indent)
-(global-set-key (kbd "C-c u") (kbd "C-u 0 C-k"))
+(global-set-key (kbd "C-c u") 'C0Ck-with-indent)
+(global-set-key (kbd "C-c C-u") (kbd "C-u 0 C-k"))
 ; Flip "C-x k" & "C-x C-k"
 (global-set-key (kbd "C-x C-k") 'kill-buffer)
 ; (global-set-key (kbd "C-x k RET") 'kmacro-edit-macro) ; DO NOT turn this on it will cause your emacs to crash on init
