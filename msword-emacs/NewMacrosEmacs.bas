@@ -208,7 +208,7 @@ Attribute KillTilEndofLine.VB_ProcData.VB_Invoke_Func = "Normal.NewMacros.KillTi
 '
     Selection.EndKey Unit:=wdLine, Extend:=wdExtend
     Selection.MoveLeft Unit:=wdCharacter, Count:=1, Extend:=wdExtend
-    Selection.TypeBackspace
+    Selection.Delete Unit:=wdCharacter, Count:=1
 End Sub
 Sub KillTilStartofLine()
 Attribute KillTilStartofLine.VB_ProcData.VB_Invoke_Func = "Normal.NewMacros.KillTilStartofLine"
@@ -235,4 +235,20 @@ Attribute NewLine.VB_ProcData.VB_Invoke_Func = "Normal.NewMacros.NewLine"
 '
 '
     Selection.TypeParagraph
+End Sub
+Sub ScrollDown()
+Attribute ScrollDown.VB_ProcData.VB_Invoke_Func = "Normal.NewMacros.ScrollDown"
+'
+' ScrollDown Macro
+'
+'
+    ActiveWindow.ActivePane.SmallScroll Down:=5
+End Sub
+Sub ScrollUp()
+Attribute ScrollUp.VB_ProcData.VB_Invoke_Func = "Normal.NewMacros.ScrollUp"
+'
+' ScrollUp Macro
+'
+'
+    ActiveWindow.ActivePane.SmallScroll Up:=5
 End Sub
