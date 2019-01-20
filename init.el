@@ -73,16 +73,10 @@
 ; List the packages you want
 (setq package-list '(evil
                      counsel
-                     writeroom-mode
-                     ;feebleline
                      slime
-                     highlight-indent-guides
-                     vdiff))
+                     highlight-indent-guides))
 
 ; evil - counsel (Ivy+Swiper) : MUST HAVE PACKAGES
-; writeroom - feebleline : Minimalist is king
-; ample-theme - alternative colorschemes
-; vdiff - vim diff for emacs
 
 ; Install the missing packages
 (dolist (package package-list)
@@ -258,10 +252,7 @@ end-of-buffer signals; pass the rest to the default handler."
 ;; (add-hook 'org-mode-hook 'variable-pitch-mode)
 (add-hook 'org-mode-hook 'org-bullets-mode)
 (add-hook 'org-mode-hook 'adaptive-wrap-prefix-mode)
-;; (add-hook 'org-mode-hook 'writeroom-mode)
-(if (display-graphic-p)
-    (progn (add-hook 'org-mode-hook 'writeroom-mode)
-        (add-hook 'text-mode-hook 'writeroom-mode)))
+
 ;; (add-hook 'text-mode-hook 'variable-pitch-mode) ; handled by mixed-pitch.el
 
 ;; q kills buffer instead of closing window
@@ -482,14 +473,6 @@ end-of-buffer signals; pass the rest to the default handler."
 
 (use-package smex
   :ensure t) ; smex gives ivy history
-
-(require 'writeroom-mode)
-;; (writeroom-set-fullscreen 'maximized)
-;; (writeroom-set-vertical-scroll-bars 1)
-(setq writeroom-width 0.65)
-
-(require 'vdiff)
-(define-key vdiff-mode-map (kbd "C-c") vdiff-mode-prefix-map)
 
 (use-package merlin
   :ensure t)
