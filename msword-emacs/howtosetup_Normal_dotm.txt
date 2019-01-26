@@ -50,6 +50,20 @@ DeleteForwardChar DeleteForwardWord
 KillTilEndofLine KillTilStartofLine
 -caveat: 'KillTilEndOfLine' Selects til end of line and MOVES BACK BY ONE so you don't delete the newline character as well. Very annoying behaviour if the newline character keeps getting killed, results in a lot of unwanted joining of sentences.
 
+4) Sane bullet indentation
+Microsoft Word's default bullet indentation is too wide! Shrink it down to these dimensions(Mac only)
+follow these guides: they're not perfect but they will provide most of the details
+http://hints.macworld.com/article.php?story=20110505133324228
+https://answers.microsoft.com/en-us/msoffice/forum/all/bulletpoint-list-format-changes-when-i-save/853ef0b4-ad18-47fc-a57f-fe62779732f2
+Level   Bullet Position     Text Position
+-----------------------------------------
+1       0.00cm              0.30cm
+2       0.30cm              0.65cm
+3       0.65cm              0.95cm
+4       0.95cm              1.25cm
+5       1.25cm              1.60cm
+
+
 Misc
 ----
 NewLine
