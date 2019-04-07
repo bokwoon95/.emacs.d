@@ -114,8 +114,10 @@
 	(add-to-list 'initial-frame-alist '(fullscreen . maximized))) ; start emacs in fullscreen
 (if (eq system-type 'darwin)
 	(set-default-font "Source Code Pro 12")
+	;; (set-default-font "Fira Mono 12")
   (set-default-font "Source Code Pro 10"))
-(set-face-font 'variable-pitch "Vollkorn 16")
+;; (set-face-font 'variable-pitch "Vollkorn 16")
+(set-face-font 'variable-pitch "Faustina 16")
 (setq-default line-spacing 0)
 (global-visual-line-mode t) ;;wrap text
 (setq scroll-conservatively 101)
@@ -598,4 +600,4 @@ end-of-buffer signals; pass the rest to the default handler."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(dash-at-point highlight-indent-guides tuareg merlin writeroom-mode vdiff use-package smex slime org-bullets mixed-pitch magit evil counsel adaptive-wrap ace-window))))
+	(company-restclient restclient dash-at-point highlight-indent-guides tuareg merlin writeroom-mode vdiff use-package smex slime org-bullets mixed-pitch magit evil counsel adaptive-wrap ace-window))))
