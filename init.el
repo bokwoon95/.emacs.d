@@ -113,7 +113,9 @@
 (if (eq system-type 'gnu/linux)
 	(add-to-list 'initial-frame-alist '(fullscreen . maximized))) ; start emacs in fullscreen
 (if (eq system-type 'darwin)
-	(set-default-font "Source Code Pro 12")
+	(progn
+	  (set-frame-font "Source Code Pro 12")
+	  (set-default-font "Source Code Pro 12"))
 	;; (set-default-font "Fira Mono 12")
   (set-default-font "Source Code Pro 10"))
 ;; (set-face-font 'variable-pitch "Vollkorn 16")
@@ -249,8 +251,8 @@ end-of-buffer signals; pass the rest to the default handler."
 (eval-after-load 'org-mode '(progn (require 'org-fold)))
 ;; Targets.vim for emacs
 (require 'targets)
-(require 'mac-pseudo-daemon)
-(setq mac-pseudo-daemon-mode t)
+(require 'osx-pseudo-daemon)
+;; (setq osx-pseudo-daemon t)
 
 ;; Filetype specific settings
 ;; (add-hook 'org-mode-hook 'variable-pitch-mode)
