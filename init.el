@@ -251,7 +251,7 @@ end-of-buffer signals; pass the rest to the default handler."
 (eval-after-load 'org-mode '(progn (require 'org-fold)))
 ;; Targets.vim for emacs
 (require 'targets)
-(require 'osx-pseudo-daemon)
+;; (require 'osx-pseudo-daemon)
 ;; (setq osx-pseudo-daemon t)
 
 ;; Filetype specific settings
