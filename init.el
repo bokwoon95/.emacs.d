@@ -368,6 +368,7 @@ end-of-buffer signals; pass the rest to the default handler."
 (define-key evil-motion-state-map (kbd "H") 'evil-first-non-blank-of-visual-line)
 (define-key evil-motion-state-map (kbd "L") 'evil-end-of-visual-line)
 (define-key evil-motion-state-map (kbd "TAB") 'evil-jump-item)
+(define-key evil-motion-state-map (kbd "M") 'evil-jump-item)
 (define-key evil-normal-state-map (kbd "M-d d") (kbd "\"_dd"))
 (define-key evil-visual-state-map (kbd "M-d") (kbd "\"_d"))
 (define-key evil-normal-state-map (kbd "SPC ri") (kbd "gg=G C-o"))
@@ -375,6 +376,7 @@ end-of-buffer signals; pass the rest to the default handler."
 (define-key evil-normal-state-map (kbd "C-x C-h k") 'describe-key)
 (define-key evil-normal-state-map (kbd "C-x C-h f") 'describe-function)
 (define-key evil-normal-state-map (kbd "C-x C-h v") 'describe-variable)
+(define-key evil-normal-state-map (kbd "C-x C-h m") 'describe-mode)
 ;; Jumplist
 (define-key evil-motion-state-map (kbd "C-m") 'evil-jump-forward)
 ;; Buffer Management
@@ -406,6 +408,7 @@ end-of-buffer signals; pass the rest to the default handler."
 (define-key evil-visual-state-map (kbd "Y") (kbd "\" + y"))
 ;; Select lasted pasted text
 (define-key evil-normal-state-map (kbd "g h") (kbd "'[ V ']"))
+(define-key evil-normal-state-map (kbd "M-.") nil)
 ;; Misc
 (defun evil-unimpaired/insert-space-above (count)
   (interactive "p")
@@ -585,6 +588,9 @@ end-of-buffer signals; pass the rest to the default handler."
 ;;         (" | %s"    ((feebleline-previous-buffer-name))
 ;;          (face feebleline-previous-buffer-face))))
 
+;; javascript
+(add-hook js-mode-hook (tide-mode +1))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -604,4 +610,4 @@ end-of-buffer signals; pass the rest to the default handler."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(company-restclient restclient dash-at-point highlight-indent-guides tuareg merlin writeroom-mode vdiff use-package smex slime org-bullets mixed-pitch magit evil counsel adaptive-wrap ace-window))))
+	(tide indium company-restclient restclient dash-at-point highlight-indent-guides tuareg merlin writeroom-mode vdiff use-package smex slime org-bullets mixed-pitch magit evil counsel adaptive-wrap ace-window))))
