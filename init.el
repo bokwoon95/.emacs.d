@@ -240,8 +240,8 @@ end-of-buffer signals; pass the rest to the default handler."
 ;; Load lisp scripts
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/"))
 ;; emacs autosave (get script from https://github.com/redguardtoo/emacs.d/blob/master/site-lisp/auto-save/auto-save.el)
-(require 'auto-save)
-(auto-save-enable)
+;; (require 'auto-save)
+;; (auto-save-enable)
 ;; Useful Commands
 (require 'useful-commands)
 ;; Single dired window
@@ -602,6 +602,15 @@ end-of-buffer signals; pass the rest to the default handler."
 (setq highlight-indent-guides-method 'character)
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
+(use-package dante
+  :ensure t
+  :after haskell-mode
+  :commands 'dante-mode
+  :init
+  (add-hook 'haskell-mode-hook 'flycheck-mode)
+  (add-hook 'haskell-mode-hook 'dante-mode)
+  )
+
 ;; Ivy mode (A superior Ido)
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers nil) ; set true if you want to see recent files and bookmarks
@@ -717,4 +726,8 @@ end-of-buffer signals; pass the rest to the default handler."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
+<<<<<<< Updated upstream
 	(company-lsp lsp-ui company-quickhelp company-flx company flycheck lsp-mode tide indium company-restclient restclient dash-at-point highlight-indent-guides tuareg merlin writeroom-mode vdiff use-package smex slime org-bullets mixed-pitch magit evil counsel adaptive-wrap ace-window))))
+=======
+	(lsp-mode tide indium company-restclient restclient dash-at-point highlight-indent-guides tuareg merlin writeroom-mode vdiff use-package smex slime org-bullets mixed-pitch magit evil counsel adaptive-wrap ace-window))))
+>>>>>>> Stashed changes
