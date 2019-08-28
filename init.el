@@ -5,6 +5,7 @@
 ; (setq file-name-handler-alist nil)
 ; If emacs has some weird emacsclient error, try commenting out the above
 
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
@@ -489,6 +490,115 @@ end-of-buffer signals; pass the rest to the default handler."
 (use-package tuareg
   :ensure t)
 
+(use-package flycheck
+  :ensure t
+  :defer t
+  :init (global-flycheck-mode t))
+
+(use-package company
+  :ensure t
+  :defer t
+  :init (global-company-mode t)
+  :config
+  ;; Company Flx adds fuzzy matching to company, powered by the sophisticated
+  ;; sorting heuristics  in =flx=
+  (use-package company-flx
+    :ensure t
+    :after company
+    :init (company-flx-mode t))
+  ;; Company Quickhelp
+  ;; When idling on a completion candidate the documentation for the
+  ;; candidate will pop up after `company-quickhelp-delay' seconds.
+  (use-package company-quickhelp
+    :after company
+    :ensure t
+    ;; :init (company-quickhelp-mode t)
+    :hook (prog-mode . (lambda ()
+                         (when (window-system)
+                           (company-quickhelp-local-mode))))
+    :config
+    (setq company-quickhelp-delay 0.2
+          company-quickhelp-max-lines nil)))
+
+(use-package lsp-mode
+  :defer t
+  :ensure t
+  :commands lsp
+  :config
+  (setq lsp-log-io nil
+        lsp-auto-configure t
+        lsp-auto-guess-root t
+        lsp-enable-completion-at-point t
+        lsp-enable-xref t
+        lsp-prefer-flymake nil
+        lsp-use-native-json t
+        lsp-enable-indentation t
+        lsp-response-timeout 10
+        lsp-restart 'auto-restart
+        lsp-keep-workspace-alive t
+        lsp-eldoc-render-all nil
+        lsp-enable-snippet nil
+        lsp-enable-folding t)
+   ;;; lsp-ui gives us the blue documentation boxes and the sidebar info
+  (use-package lsp-ui
+    :defer t
+    :ensure t
+    :after lsp
+    :commands lsp-ui-mode
+    :config
+    (setq lsp-ui-sideline-ignore-duplicate t
+          lsp-ui-sideline-delay 0.5
+          lsp-ui-sideline-show-symbol t
+          lsp-ui-sideline-show-hover t
+          lsp-ui-sideline-show-diagnostics t
+          lsp-ui-sideline-show-code-actions t
+          lsp-ui-peek-always-show t
+          lsp-ui-doc-use-childframe t)
+    :bind
+    (:map lsp-ui-mode-map
+          ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+          ([remap xref-find-references] . lsp-ui-peek-find-references))
+    :hook
+    ((lsp-mode . lsp-ui-mode)
+     (lsp-after-open . (lambda ()
+                         (lsp-ui-flycheck-enable t)
+                         (lsp-ui-sideline-enable t)
+                         (lsp-ui-imenu-enable t)
+                         (lsp-lens-mode t)
+                         (lsp-ui-peek-enable t)
+                         (lsp-ui-doc-enable t)))))
+  ;;; company lsp
+  ;; install LSP company backend for LSP-driven completion
+  (use-package company-lsp
+    :defer t
+    :ensure t
+    :after company
+    :commands company-lsp
+    :config
+    (setq company-lsp-cache-candidates t
+          company-lsp-enable-recompletion t
+          company-lsp-enable-snippet t
+          company-lsp-async t)
+    ;; avoid, as this changes it globally do it in the major mode instead (push
+    ;; 'company-lsp company-backends) better set it locally
+    :hook (lsp-after-open . (lambda()
+                              (add-to-list (make-local-variable 'company-backends)
+                                           'company-lsp)))))
+
+(use-package vhdl-mode
+  :defer t
+  :config
+  (require 'lsp)
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection '("ghdl-ls" "-v" "--trace-file=/tmp/emacs.d/vhdl-ls.trace"))
+                    :major-modes '(vhdl-mode)
+                    :priority -1
+                    :server-id 'lsp-vhdl-mode))
+  :hook (vhdl-mode . (lambda()
+                       (lsp)
+                       (flycheck-mode t)
+                       (add-to-list 'lsp-language-id-configuration '(vhdl-mode . "vhdl")))))
+
 (setq highlight-indent-guides-method 'character)
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
@@ -588,9 +698,6 @@ end-of-buffer signals; pass the rest to the default handler."
 ;;         (" | %s"    ((feebleline-previous-buffer-name))
 ;;          (face feebleline-previous-buffer-face))))
 
-;; javascript
-(add-hook js-mode-hook (tide-mode +1))
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -610,4 +717,4 @@ end-of-buffer signals; pass the rest to the default handler."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(tide indium company-restclient restclient dash-at-point highlight-indent-guides tuareg merlin writeroom-mode vdiff use-package smex slime org-bullets mixed-pitch magit evil counsel adaptive-wrap ace-window))))
+	(company-lsp lsp-ui company-quickhelp company-flx company flycheck lsp-mode tide indium company-restclient restclient dash-at-point highlight-indent-guides tuareg merlin writeroom-mode vdiff use-package smex slime org-bullets mixed-pitch magit evil counsel adaptive-wrap ace-window))))
