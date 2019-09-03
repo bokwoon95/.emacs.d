@@ -502,10 +502,10 @@ end-of-buffer signals; pass the rest to the default handler."
   :config
   ;; Company Flx adds fuzzy matching to company, powered by the sophisticated
   ;; sorting heuristics  in =flx=
-  (use-package company-flx
-    :ensure t
-    :after company
-    :init (company-flx-mode t))
+  ;; (use-package company-flx
+  ;;   :ensure t
+  ;;   :after company
+  ;;   :init (company-flx-mode t))
   ;; Company Quickhelp
   ;; When idling on a completion candidate the documentation for the
   ;; candidate will pop up after `company-quickhelp-delay' seconds.
@@ -589,11 +589,11 @@ end-of-buffer signals; pass the rest to the default handler."
   :defer t
   :config
   (require 'lsp)
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection '("ghdl-ls" "-v" "--trace-file=/tmp/emacs.d/vhdl-ls.trace"))
-                    :major-modes '(vhdl-mode)
-                    :priority -1
-                    :server-id 'lsp-vhdl-mode))
+  ;; (lsp-register-client
+  ;;  (make-lsp-client :new-connection (lsp-stdio-connection '("ghdl-ls" "-v" "--trace-file=/tmp/emacs.d/vhdl-ls.trace"))
+  ;;                   :major-modes '(vhdl-mode)
+  ;;                   :priority -1
+  ;;                   :server-id 'lsp-vhdl-mode))
   :hook (vhdl-mode . (lambda()
                        (lsp)
                        (flycheck-mode t)
@@ -726,8 +726,4 @@ end-of-buffer signals; pass the rest to the default handler."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-<<<<<<< Updated upstream
-	(company-lsp lsp-ui company-quickhelp company-flx company flycheck lsp-mode tide indium company-restclient restclient dash-at-point highlight-indent-guides tuareg merlin writeroom-mode vdiff use-package smex slime org-bullets mixed-pitch magit evil counsel adaptive-wrap ace-window))))
-=======
-	(lsp-mode tide indium company-restclient restclient dash-at-point highlight-indent-guides tuareg merlin writeroom-mode vdiff use-package smex slime org-bullets mixed-pitch magit evil counsel adaptive-wrap ace-window))))
->>>>>>> Stashed changes
+	(company-lsp lsp-ui company-quickhelp company-flx vhdl-capf use-package tuareg smex slime org-bullets mixed-pitch merlin magit lsp-mode highlight-indent-guides evil dante counsel adaptive-wrap ace-window))))
