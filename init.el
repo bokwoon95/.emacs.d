@@ -5,7 +5,6 @@
 ; (setq file-name-handler-alist nil)
 ; If emacs has some weird emacsclient error, try commenting out the above
 
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
